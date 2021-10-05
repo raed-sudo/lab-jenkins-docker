@@ -36,16 +36,31 @@ sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.de
 
 				}
 
-		stage('Production Deploy'){
-			when {
-				branch 'master'
-				}
-			steps{
-				echo 'This is PROD'
-				sh ' hostname '
-				}
-					}
-		}
+		
+	                stage('DEPLOY TO PROD'){
+                        steps {
+                        input 'DO YOU CONFIRM THE DEPLOYMENT TO THE PROD ?'
+
+                        withCredentials ([usernamePassword(credentialsId: 'deploy', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                        script {
+                        try {
+                                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \" docker stop lab-jenkins \"" ;
+                                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \" docker rm lab-jenkins \"" ;
+                                } catch (err) {
+                                        echo :' Caught error : $err' ;
+                                        }
+}
+                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.dev_ip} \" docker run --restart always -dp 80:8080 --name lab-jenkins rlouati/lab-jenkins:latest \""
+
+
+
+                                                                                }
+}
+
+                                }
+
+
+}
 
 
 	}
