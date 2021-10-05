@@ -5,6 +5,7 @@ pipeline{
 		stage('Build'){
 			steps {
 				echo '###### This Is The Build Stage ######'
+				sh 'sudo -i '
 				sh 'cd /root/lab-jenkins-docker'
 				sh 'jar -cvf /root/lab-jenkins-docker/dist/lab-jenkins.war /root/lab-jenkins-docker/src/index.html'
 				}
