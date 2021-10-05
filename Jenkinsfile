@@ -8,6 +8,8 @@ pipeline{
 				echo '###### This Is The Build Stage ######'
 sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.dev_ip} \" cd /home/deploy/lab-jenkins-docker ; jar -cvf dist/lab-jenkins.war src/index.html \""
 sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.dev_ip} \" cd /home/deploy/lab-jenkins-docker ; docker build -t rlouati/lab-jenkins:latest .  \""
+sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.dev_ip} \" cd /home/deploy/lab-jenkins-docker ; docker push rlouati/lab-jenkins:latest ; docker push rlouati/lab-jenkins:${env.BUILD_NUMBER}  \""
+
 				}
 			}
 					}
