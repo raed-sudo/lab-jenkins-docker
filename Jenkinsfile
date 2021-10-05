@@ -3,16 +3,23 @@ pipeline{
 
 	stages{
 		stage('Build'){
-			echo 'This is the Build test'
-			sh 'echo Hello'
+			steps {
+				echo 'This is the Build test'
+				sh 'echo Hello'
 				}
+					}
 		stage('Deploy'){
-			echo 'This is the Deploy Stage'
-			sh 'echo Deplou'
+			steps {
+				echo 'This is the Deploy Stage'
+				sh 'echo Deploy'
+				}
 				}
 		stage('Production Deploy'){
 			when {
 				branch 'master'
+				}
+			steps{
+				echo 'This is PROD'
 				}
 					}
 		}
