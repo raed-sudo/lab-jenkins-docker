@@ -14,6 +14,7 @@ sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.de
 				}
 			}
 					}
+					
 		stage('Deploy'){
 			steps {
 				echo 'This is the Deploy Stage'
@@ -32,11 +33,10 @@ sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.de
 
 
 										}
-
+}
 
 				}
-				}			
-				}
+
 		stage('Production Deploy'){
 			when {
 				branch 'master'
