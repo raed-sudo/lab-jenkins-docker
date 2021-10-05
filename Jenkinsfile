@@ -20,6 +20,7 @@ pipeline{
 				}
 			steps{
 				echo 'This is PROD'
+				sh ' hostname '
 				}
 					}
 		}
