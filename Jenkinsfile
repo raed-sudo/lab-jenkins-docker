@@ -14,6 +14,7 @@ sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.de
 		stage('Deploy'){
 			steps {
 				echo 'This is the Deploy Stage'
+				echo ''
 				sh 'echo Deploy'
 				}
 				}
