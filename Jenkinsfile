@@ -4,8 +4,10 @@ pipeline{
 	stages{
 		stage('Build'){
 			steps {
-				echo 'This is the Build test'
-				sh 'echo Hello'
+				echo '###### This Is The Build Stage ######'
+				sh 'sudo cd /root/lab-jenkins-docker'
+				sh 'sudo jar -cvf dist/lab-jenkins.war src/index.html'
+				sh 'sudo ls -l lab-jenkins.war'
 				}
 					}
 		stage('Deploy'){
