@@ -17,9 +17,25 @@ sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.de
 		stage('Deploy'){
 			steps {
 				echo 'This is the Deploy Stage'
-				echo ''
-				sh 'echo Deploy'
+				
+			withCredentials ([usernamePassword(credentialsId: 'deploy', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+
+			try {
+
+			sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.dev_ip} \" docker stop lab-jenkins \""
+			sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.dev_ip} \" docker rm lab-jenkins \""
+				}catch (err){
+					echo ' Caught error : $err'
+					}
+			sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.dev_ip} \" docker run --restart always -dp 7070:8080 --name lab-jenkins rlouati/lab-jenkins:latest \""
+
+
+
+										}
+
+
 				}
+				}			
 				}
 		stage('Production Deploy'){
 			when {
