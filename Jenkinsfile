@@ -50,7 +50,7 @@ sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.de
                                         echo :' Caught error : $err' ;
                                         }
 }
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \" docker run --restart always -dp 8080:8080 --name lab-jenkins rlouati/lab-jenkins:latest \""
+                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \" podman rmi docker.io/rlouati/lab-jenkins -f ; docker run --restart always -dp 8080:8080 --name lab-jenkins rlouati/lab-jenkins:latest \""
 
 
 
